@@ -109,28 +109,14 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.currentWeekDates = this._calendarService.getWeekData(this.weekDate);
     this.currentMonthDates = this._calendarService.getMonthData(this.monthDate);
-  }
+    this._calendarService.currentMonthDates$.subscribe((currentMonthDates: Date[]) => {
+      this.currentMonthDates = currentMonthDates;
+    });
+    this._calendarService.currentWeekDates$.subscribe((currentWeekDates: Date[]) => {
+      this.currentWeekDates = currentWeekDates;
+    });
 
-  onClickNextMonth() {
-    this._calendarService.onClickNextMonth();
-    this.currentMonthDates = this._calendarService.getCurrentMonthDates();
-    console.log(this.currentMonthDates);
-  }
-  onClickNextWeek() {
-    this._calendarService.onClickNextWeek();
-    this.currentWeekDates = this._calendarService.getCurrentWeekDates();
-    console.log(this.currentWeekDates);
-  }
-  onClickPreviousMonth() {
-    this._calendarService.onClickPreviousMonth();
-    this.currentMonthDates = this._calendarService.getCurrentMonthDates();
-    console.log(this.currentMonthDates);
-  }
-  onClickPreviousWeek() {
-    this._calendarService.onClickPreviousWeek();
-    this.currentWeekDates = this._calendarService.getCurrentWeekDates();
-    console.log(this.currentWeekDates);
-  }
+  } 
 
   formatDate = (date: Date) => {
     return format(date, 'MM/dd/yyyy');
