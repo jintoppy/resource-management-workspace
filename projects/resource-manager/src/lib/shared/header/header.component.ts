@@ -22,9 +22,7 @@ import { CalendarComponent } from '../calendar/calendar.component';
 export class HeaderComponent implements OnInit {
   tabValue = '';
   activeView: string;
-  private calendarComponent: CalendarComponent = new CalendarComponent(
-    this.calendarService
-  );
+  
 
   @Output() tabValueEvent = new EventEmitter<string>();
 
@@ -79,19 +77,19 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickNextMonth = (): void => {
-    this.calendarComponent.onClickNextMonth();
+    this.calendarService.onClickNextMonth();
   };
 
   onClickNextWeek = (): void => {
-    this.calendarComponent.onClickNextWeek();
+    this.calendarService.onClickNextWeek();
   };
 
   onClickPreviousMonth = (): void => {
-    this.calendarComponent.onClickPreviousMonth();
+    this.calendarService.onClickPreviousMonth();
   };
 
   onClickPreviousWeek = (): void => {
-    this.calendarComponent.onClickPreviousWeek();
+    this.calendarService.onClickPreviousWeek();
   };
 
   ngOnInit(): void {}

@@ -14,6 +14,7 @@ import {
   endOfWeek,
   startOfDay,
 } from 'date-fns';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,9 @@ export class CalendarService {
 
   currentMonthDates: Date[] = [];
   currentWeekDates: Date[] = [];
+
+  currentMonthDates$: BehaviorSubject<Date[]> = new BehaviorSubject<Date[]>(this.currentMonthDates);
+  currentWeekDates$: BehaviorSubject<Date[]> = new BehaviorSubject<Date[]>(this.currentWeekDates);
 
   constructor() {}
 
@@ -96,24 +100,28 @@ export class CalendarService {
     let firstDayMonth = startOfMonth(this.monthDate);
     this.monthDate = subDays(firstDayMonth, 1);
     this.getMonthData(this.monthDate);
+    this.currentMonthDates$.next(this.currentMonthDates);
   };
 
   onClickPreviousWeek = (): void => {
     let firstDayWeek = startOfWeek(this.weekDate);
     this.weekDate = subDays(firstDayWeek, 1);
     this.getWeekData(this.weekDate);
+    this.currentWeekDates$.next(this.currentWeekDates);
   };
 
   onClickNextMonth = (): void => {
     let lastDayMonth = lastDayOfMonth(this.monthDate);
     this.monthDate = addDays(lastDayMonth, 1);
     this.getMonthData(this.monthDate);
+    this.currentMonthDates$.next(this.currentMonthDates);
   };
 
   onClickNextWeek = (): void => {
     let lastDayWeek = lastDayOfWeek(this.weekDate);
     this.weekDate = addDays(lastDayWeek, 1);
     this.getWeekData(this.weekDate);
+    this.currentWeekDates$.next(this.currentWeekDates);
   };
 
   getActiveView = (): string => {
